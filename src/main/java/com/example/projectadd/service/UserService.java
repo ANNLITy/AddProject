@@ -1,13 +1,17 @@
 package com.example.projectadd.service;
 
+import DTO.NewPasswordDTO;
+import DTO.UserDTO;
 import com.example.projectadd.model.User;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 public interface UserService {
-    void save(User user);
+    void setPassword(NewPasswordDTO newPasswordDto, String userName);
+    UserDTO getUser(String userName);
+    UserDTO updateUser(UserDTO userDto, String userName);
+    User checkUserByUsername(String username);
 
-    void update(User user);
-
-    void delete(User user);
-    void deleteById(int id);
-    User getById(int id);
 }
+

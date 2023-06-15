@@ -1,38 +1,56 @@
 package com.example.projectadd.impl;
 
+import DTO.NewPasswordDTO;
+import DTO.UserDTO;
+import com.example.projectadd.exception.UserNotFoundException;
+import com.example.projectadd.mapper.UserMapper;
 import com.example.projectadd.model.User;
 import com.example.projectadd.repository.UserRepository;
 import com.example.projectadd.service.UserService;
 
 public class UserServiceImpl implements UserService {
-    private final UserRepository repository;
+    private final UserRepository userRepository;
+    private final UserMapper userMapper;
 
-    public UserServiceImpl(UserRepository repository) {
-        this.repository = repository;
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
+        this.userRepository = userRepository;
+        this.userMapper = userMapper;
+    }
+
+
+    @Override
+    public void setPassword(NewPasswordDTO newPasswordDto, String userName) {
+        User user = checkUserByUsername(userName);
+        user.setPassword(newPasswordDto.getNewPassword());
+        userRepository.save(user);
     }
 
     @Override
-    public void save(User user) {
-        repository.save(user);
+    public UserDTO getUser(String userName) {
+        User user = userRepository.findByUsername(userName);
+        if (user != null) {
+            return userMapper.toDto(user);
+        } else {
+            return null;
+        }
     }
 
     @Override
-    public void update(User user) {
-        repository.save(user);
+    public UserDTO updateUser(UserDTO userDto, String userName) {
+        User user = checkUserByUsername(userName);
+        user.setFirstName(userDto.getFirstName());
+        user.setLastName(userDto.getLastName());
+        user.setPhone(userDto.getPhone());
+        userRepository.save(user);
+        return userMapper.toDto(user);
     }
 
     @Override
-    public void delete(User user) {
-        repository.delete(user);
-    }
-
-    @Override
-    public void deleteById(int id) {
-        repository.deleteById(id);
-    }
-
-    @Override
-    public User getById(int id) {
-        return repository.findById(id).orElseThrow(Error::new);
+    public User checkUserByUsername(String username) {
+        User user = userRepository.findByUsername(username);
+        if (user == null) {
+            throw new UserNotFoundException(toString());
+        }
+        return user;
     }
 }
