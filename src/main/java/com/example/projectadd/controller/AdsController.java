@@ -1,6 +1,10 @@
 package com.example.projectadd.controller;
 
 import DTO.*;
+import com.example.projectadd.service.AdsService;
+import com.example.projectadd.service.CommentService;
+import com.example.projectadd.service.ImageService;
+import com.example.projectadd.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +15,10 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/ads")
 @CrossOrigin(value = "http://localhost:3000")
 public class AdsController {
-
+    private AdsService adsService;
+    private ImageService imageService;
+    private CommentService CommentService;
+    private UserService userService;
 
 
     @GetMapping("/")

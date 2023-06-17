@@ -6,8 +6,9 @@ import org.mapstruct.Mapping;
 
 import javax.xml.stream.events.Comment;
 
-@Mapper(componentModel= "spring")
-public interface AdsCommentMapper {
+@Mapper(componentModel = "spring")
+public interface CommentMapper {
+
     @Mapping(source = "pk", target = "id")
     @Mapping(target = "user.id", source = "author")
     @Mapping(target = "user.image.path", source = "authorImage")
@@ -16,4 +17,3 @@ public interface AdsCommentMapper {
     CommentDTO toCommentDto(Comment adsComment);
 
 }
-
