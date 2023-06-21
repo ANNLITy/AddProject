@@ -1,8 +1,8 @@
 package com.example.projectadd.service;
 
-import DTO.CommentDTO;
-import DTO.CreateCommentDTO;
-import DTO.ResponseWrapperCommentDTO;
+import com.example.projectadd.DTO.CommentDTO;
+import com.example.projectadd.DTO.CreateCommentDTO;
+import com.example.projectadd.DTO.ResponseWrapperCommentDTO;
 import org.springframework.security.core.Authentication;
 
 public interface CommentService {

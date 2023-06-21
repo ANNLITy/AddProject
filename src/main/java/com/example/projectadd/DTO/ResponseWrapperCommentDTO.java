@@ -1,4 +1,4 @@
-package DTO;
+package com.example.projectadd.DTO;
 
 import lombok.Data;
 

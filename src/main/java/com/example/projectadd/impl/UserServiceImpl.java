@@ -1,7 +1,7 @@
 package com.example.projectadd.impl;
 
 import DTO.NewPasswordDTO;
-import DTO.UserDTO;
+import com.example.projectadd.DTO.UserDTO;
 import com.example.projectadd.exception.UserNotFoundException;
 import com.example.projectadd.mapper.UserMapper;
 import com.example.projectadd.model.User;

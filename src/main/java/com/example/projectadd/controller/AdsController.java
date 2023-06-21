@@ -1,6 +1,6 @@
 package com.example.projectadd.controller;
 
-import DTO.*;
+import com.example.projectadd.DTO.*;
 import com.example.projectadd.service.AdsService;
 import com.example.projectadd.service.CommentService;
 import com.example.projectadd.service.ImageService;

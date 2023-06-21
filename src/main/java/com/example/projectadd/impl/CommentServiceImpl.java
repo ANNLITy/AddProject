@@ -1,8 +1,8 @@
 package com.example.projectadd.impl;
 
-import DTO.CommentDTO;
-import DTO.CreateCommentDTO;
-import DTO.ResponseWrapperCommentDTO;
+import com.example.projectadd.DTO.CommentDTO;
+import com.example.projectadd.DTO.CreateCommentDTO;
+import com.example.projectadd.DTO.ResponseWrapperCommentDTO;
 import com.example.projectadd.admin.AdminUtils;
 import com.example.projectadd.exception.CommentNotFoundException;
 import com.example.projectadd.mapper.CommentMapper;
@@ -53,14 +53,14 @@ public class CommentServiceImpl implements CommentService {
         comment.setCreatedAt(System.currentTimeMillis());
         comment.setText(createCommentDTO.getText());
 
-        comment = (Comment) commentRepository.save((javax.xml.stream.events.Comment) comment);
+        comment = commentRepository.save(comment);
 
-        return commentMapper.toCommentDto((javax.xml.stream.events.Comment) comment);
+        return commentMapper.toCommentDto(comment);
     }
 
     @Override
     public CommentDTO updateComment(Integer adId, Integer commentId, CommentDTO commentDTO, Authentication authentication) {
-        AdminUtils.checkPermissionToAdsComment((Comment) commentMapper.toAdsComment(commentDTO),
+        AdminUtils.checkPermissionToAdsComment(commentMapper.toAdsComment(commentDTO),
                 userService.checkUserByUsername(authentication.getName()));
         if (commentRepository.findById(commentId).isPresent()) {
             if (commentRepository.findById(commentId).get().getId() !=adId){
@@ -70,22 +70,22 @@ public class CommentServiceImpl implements CommentService {
         } else {
             throw new CommentNotFoundException(COMMENT_NOT_FOUND);
         }
-        Comment comment = (Comment) commentRepository.findById(commentId).orElseThrow();
+        Comment comment = commentRepository.findById(commentId).orElseThrow();
         comment.setCreatedAt(System.currentTimeMillis());
         comment.setText(commentDTO.getText());
-        commentRepository.save((javax.xml.stream.events.Comment) comment);
-        return commentMapper.toCommentDto((javax.xml.stream.events.Comment) comment);
+        commentRepository.save(comment);
+        return commentMapper.toCommentDto(comment);
     }
 
 
     @Override
     public boolean deleteComment(Integer adId, Integer commentId, Authentication authentication) {
-        Comment comment = (Comment) commentRepository.findById(commentId).orElseThrow(() -> new CommentNotFoundException(COMMENT_NOT_FOUND.formatted(commentId)));
+        Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new CommentNotFoundException(COMMENT_NOT_FOUND.formatted(commentId)));
         if (comment.getAds().getId() != adId) {
             throw new NotFoundException(COMMENT_NOT_BELONG_AD);
         }
         AdminUtils.checkPermissionToAdsComment(comment, userService.checkUserByUsername(authentication.getName()));
-        commentRepository.delete((javax.xml.stream.events.Comment) comment);
+        commentRepository.delete(comment);
         return true;
     }
 }

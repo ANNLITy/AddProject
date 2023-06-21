@@ -1,8 +1,8 @@
 package com.example.projectadd.mapper;
 
-import DTO.AdsDTO;
-import DTO.CreateAdsDTO;
-import DTO.FullAdsDTO;
+import com.example.projectadd.DTO.AdsDTO;
+import com.example.projectadd.DTO.CreateAdsDTO;
+import com.example.projectadd.DTO.FullAdsDTO;
 import com.example.projectadd.model.Ads;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -16,7 +16,7 @@ public interface AdsMapper {
     @Mapping(source = "image.path", target = "image")
     FullAdsDTO toFullAdsDto(Ads ads);
 
-    @Mapping(source = "user.id", target = "authorId")
+    @Mapping(source = "user.id", target = "author")
     @Mapping(source = "image.path", target = "image")
     AdsDTO toAdsDto(Ads ads);
 

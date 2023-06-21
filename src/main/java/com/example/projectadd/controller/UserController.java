@@ -1,7 +1,7 @@
 package com.example.projectadd.controller;
 
 import DTO.NewPasswordDTO;
-import DTO.UserDTO;
+import com.example.projectadd.DTO.UserDTO;
 import com.example.projectadd.model.User;
 import com.example.projectadd.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -22,7 +22,7 @@ public class UserController {
 
     @PostMapping("/set_password")
     @Operation(summary ="Установка  пароля" )
-    public ResponseEntity<UserDTO> setPassword(@RequestBody NewPasswordDTO newPassword,  Authentication authentication) {
+    public ResponseEntity<UserDTO> setPassword(@RequestBody NewPasswordDTO newPassword, Authentication authentication) {
         User user = userService.checkUserByUsername(authentication.getName());
         if (user != null) {
             userService.setPassword(newPassword, authentication.getName());

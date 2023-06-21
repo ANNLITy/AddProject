@@ -1,7 +1,7 @@
 package com.example.projectadd.service;
 
 import DTO.NewPasswordDTO;
-import DTO.UserDTO;
+import com.example.projectadd.DTO.UserDTO;
 import com.example.projectadd.model.User;
 
 

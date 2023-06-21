@@ -1,10 +1,10 @@
 package com.example.projectadd.mapper;
 
-import DTO.CommentDTO;
+import com.example.projectadd.DTO.CommentDTO;
+import com.example.projectadd.model.Comment;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import javax.xml.stream.events.Comment;
 
 @Mapper(componentModel = "spring")
 public interface CommentMapper {
