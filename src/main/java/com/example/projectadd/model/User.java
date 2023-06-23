@@ -1,9 +1,10 @@
 package com.example.projectadd.model;
 
+import com.example.projectadd.config.Role;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import javax.management.relation.Role;
+
 import java.time.Instant;
 
 @Entity

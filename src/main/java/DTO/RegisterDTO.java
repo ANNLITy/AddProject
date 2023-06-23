@@ -1,8 +1,8 @@
 package DTO;
 
+import com.example.projectadd.config.Role;
 import lombok.Data;
 
-import javax.management.relation.Role;
 
 @Data
 public class RegisterDTO {

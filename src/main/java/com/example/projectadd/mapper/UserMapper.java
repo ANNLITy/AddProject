@@ -12,7 +12,7 @@ public interface UserMapper {
     User toUser(UserDTO userDTO);
     @Mapping(source = "image.path", target = "image")
     UserDTO toDto(User user);
-//    @Mapping(target = "role", defaultValue = "USER")
+    @Mapping(target = "role", defaultValue = "USER")
     @Mapping(source = "username", target = "email")
     User toEntity(RegisterDTO dto);
 }
