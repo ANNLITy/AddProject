@@ -1,4 +1,4 @@
-package DTO;
+package com.example.projectadd.DTO;
 
 import com.example.projectadd.config.Role;
 import lombok.Data;

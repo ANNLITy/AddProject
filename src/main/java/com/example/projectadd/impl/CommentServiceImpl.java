@@ -14,13 +14,18 @@ import com.example.projectadd.repository.CommentRepository;
 import com.example.projectadd.service.AdsService;
 import com.example.projectadd.service.CommentService;
 import com.example.projectadd.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.webjars.NotFoundException;
 
 import java.util.List;
 
 import static com.example.projectadd.config.Const.*;
-
+@Slf4j
+@Service
+@Transactional
 public class CommentServiceImpl implements CommentService {
     private final CommentRepository commentRepository;
     private final AdsRepository adsRepository;
@@ -36,7 +41,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public ResponseWrapperCommentDTO getComments(Integer id) {
-        List<CommentDTO> comments = commentRepository.findByAdsId(id).stream()
+        List<CommentDTO> comments = commentRepository.getCommentsByAds_Id(id).stream()
                 .map(commentMapper::toCommentDto)
                 .toList();
         return new ResponseWrapperCommentDTO(comments.size(), comments);

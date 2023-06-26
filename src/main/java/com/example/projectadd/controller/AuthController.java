@@ -1,9 +1,10 @@
 package com.example.projectadd.controller;
 
-import DTO.LoginDTO;
-import DTO.RegisterDTO;
+import com.example.projectadd.DTO.LoginDTO;
+import com.example.projectadd.DTO.RegisterDTO;
 import com.example.projectadd.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @CrossOrigin(value = "http://localhost:3000")
+@Tag(name = "Аутентификация")
 public class AuthController {
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 

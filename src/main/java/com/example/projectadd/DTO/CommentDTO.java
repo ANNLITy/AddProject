@@ -22,7 +22,6 @@ public class CommentDTO {
     public String getAuthorImage() {
         return authorImage;
     }
-
     public void setAuthorImage(String authorImage) {
         this.authorImage = authorImage;
     }

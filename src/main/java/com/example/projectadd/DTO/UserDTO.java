@@ -4,25 +4,18 @@ import lombok.Data;
 
 @Data
 public class UserDTO {
-    private long id;
+    private int id;
     private String email;
     private String firstName;
     private String lastName;
     private String phone;
     private String image;
-    public String getImage() {
-        return image;
-    }
 
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -56,5 +49,13 @@ public class UserDTO {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

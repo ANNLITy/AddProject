@@ -1,4 +1,4 @@
-package DTO;
+package com.example.projectadd.DTO;
 
 public class LoginDTO {
     private String username;

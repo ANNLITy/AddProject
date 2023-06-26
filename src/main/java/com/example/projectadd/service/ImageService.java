@@ -1,13 +1,14 @@
 package com.example.projectadd.service;
 
 import com.example.projectadd.model.Image;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface ImageService {
-    void save(Image image);
+    Image uploadImage(MultipartFile imageFile);
 
-    void update(Image image);
+    byte[] loadImage(String id);
 
-    void delete(Image image);
-    void deleteById(int id);
-    Image getById(int id);
+    Image getImageById(String id);
+
+    void remove(Image image);
 }

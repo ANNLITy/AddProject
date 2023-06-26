@@ -1,10 +1,12 @@
 package com.example.projectadd.model;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -22,6 +24,8 @@ public class Image {
     @JoinColumn(name = "ads_id")
     private Ads ads;
     private String path;
+    @Lob
+    byte[] bytes;
 
     public Long getId() {
         return id;
@@ -69,5 +73,11 @@ public class Image {
 
     public void setAds(Ads ads) {
         this.ads = ads;
+    }
+    public byte[] getBytes() {
+        return bytes;
+    }
+    public void setBytes(byte[] bytes) {
+        this.bytes = bytes;
     }
 }

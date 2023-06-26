@@ -6,19 +6,19 @@ import lombok.Setter;
 
 @Data
 public class AdsDTO {
-    private long author;
+    private int authorId;
     private String image;
-    private long pk;
+    private int pk;
     private int price;
     private String title;
     private String description;
 
-    public long getAuthor() {
-        return author;
+    public int getAuthorId() {
+        return authorId;
     }
 
-    public void setAuthor(long author) {
-        this.author = author;
+    public void setAuthorId(int authorId) {
+        this.authorId = authorId;
     }
 
     public String getImage() {
@@ -29,11 +29,11 @@ public class AdsDTO {
         this.image = image;
     }
 
-    public long getPk() {
+    public int getPk() {
         return pk;
     }
 
-    public void setPk(long pk) {
+    public void setPk(int pk) {
         this.pk = pk;
     }
 
