@@ -20,7 +20,8 @@ public class Image {
     private Long size;
     private String mediaType;
     private byte[] image;
-    @ManyToOne()
+
+    @OneToOne()
     @JoinColumn(name = "ads_id")
     private Ads ads;
     private String path;

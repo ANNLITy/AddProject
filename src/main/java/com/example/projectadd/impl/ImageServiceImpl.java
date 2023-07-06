@@ -4,12 +4,15 @@ import com.example.projectadd.exception.ImageNotFoundException;
 import com.example.projectadd.model.Image;
 import com.example.projectadd.repository.ImageRepository;
 import com.example.projectadd.service.ImageService;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.webjars.NotFoundException;
 
 import java.io.IOException;
 import java.util.UUID;
 
+
+@Service
 public class ImageServiceImpl implements ImageService {
     private final ImageRepository imageRepository;
 

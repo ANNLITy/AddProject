@@ -32,11 +32,14 @@ public class CommentServiceImpl implements CommentService {
     private final CommentMapper commentMapper;
     private final UserService userService;
 
-    public CommentServiceImpl(CommentRepository commentRepository, AdsRepository adsRepository, AdsService adsService, CommentMapper commentMapper, UserService userService) {
+    private final AdminUtils adminUtils;
+
+    public CommentServiceImpl(CommentRepository commentRepository, AdsRepository adsRepository, CommentMapper commentMapper, UserService userService, AdminUtils adminUtils) {
         this.commentRepository = commentRepository;
         this.adsRepository = adsRepository;
         this.commentMapper = commentMapper;
         this.userService = userService;
+        this.adminUtils = adminUtils;
     }
 
     @Override
@@ -65,7 +68,8 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public CommentDTO updateComment(Integer adId, Integer commentId, CommentDTO commentDTO, Authentication authentication) {
-        AdminUtils.checkPermissionToAdsComment(commentMapper.toAdsComment(commentDTO),
+        adminUtils
+                .checkPermissionToAdsComment(commentMapper.toAdsComment(commentDTO),
                 userService.checkUserByUsername(authentication.getName()));
         if (commentRepository.findById(commentId).isPresent()) {
             if (commentRepository.findById(commentId).get().getId() !=adId){
@@ -89,7 +93,7 @@ public class CommentServiceImpl implements CommentService {
         if (comment.getAds().getId() != adId) {
             throw new NotFoundException(COMMENT_NOT_BELONG_AD);
         }
-        AdminUtils.checkPermissionToAdsComment(comment, userService.checkUserByUsername(authentication.getName()));
+        adminUtils.checkPermissionToAdsComment(comment, userService.checkUserByUsername(authentication.getName()));
         commentRepository.delete(comment);
         return true;
     }

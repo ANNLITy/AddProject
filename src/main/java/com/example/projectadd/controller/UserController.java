@@ -38,39 +38,4 @@ public class UserController {
     }
 
 
-
-    @GetMapping("/info")
-    @Operation(summary ="Получить информацию об авторизованном пользователе" )
-    public ResponseEntity<UserDTO> getUser(Authentication authentication) {
-        printLogInfo("me", "get", "/me");
-        UserDTO user = userService.getUser(authentication);
-        if (user != null) {
-            return ResponseEntity.ok(user);
-        } else {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
-    }
-
-
-
-    @PatchMapping("/info")
-    @Operation(summary ="Обновить информацию об авторизованном пользователе" )
-    public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO, Authentication authentication) {
-        UserDTO user = userService.updateUser(userDTO, authentication.getName());
-        if (user != null) {
-            return ResponseEntity.ok().build();
-        }
-        else {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
-    }
-
-
-
-    @PatchMapping("/info/image")
-    @Operation(summary ="Обновить изображение авторизованного пользователя" )
-    public ResponseEntity<UserDTO> updateUserImage(@RequestParam MultipartFile image) {
-        return ResponseEntity.ok().build();
-    }
-
 }

@@ -5,14 +5,15 @@ import com.example.projectadd.model.Ads;
 import com.example.projectadd.model.Comment;
 import com.example.projectadd.model.User;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.stereotype.Component;
 
 
-
+@Component
 public class AdminUtils {
     public AdminUtils() {
     }
 
-    public static void checkPermissionToAds(Ads ads, User user) {
+    public void checkPermissionToAds(Ads ads, User user) {
         UserDetails userDetails = new UserDetails(user);
 
         if (!userDetails.getAuthorities().contains(Role.ADMIN) && userDetails.getId() != ads.getUser().getId()) {
@@ -20,7 +21,7 @@ public class AdminUtils {
         }
     }
 
-    public static void checkPermissionToAdsComment(Comment adsComment, User user) {
+    public void checkPermissionToAdsComment(Comment adsComment, User user) {
         UserDetails userDetails = new UserDetails(user);
 
         if (!userDetails.getAuthorities().contains(Role.ADMIN) && userDetails.getId() != adsComment.getUser().getId()) {

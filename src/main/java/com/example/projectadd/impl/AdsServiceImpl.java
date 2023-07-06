@@ -30,7 +30,7 @@ public class AdsServiceImpl implements AdsService {
     private final ImageService imageService;
     private final UserService userService;
 
-    @Autowired
+
     public AdsServiceImpl(AdsRepository repository, AdsMapper adsMapper, ImageService imageService, UserService userService) {
         this.repository = repository;
         this.adsMapper = adsMapper;

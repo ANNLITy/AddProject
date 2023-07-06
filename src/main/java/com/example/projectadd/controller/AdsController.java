@@ -25,7 +25,7 @@ public class AdsController {
     private final CommentService commentService;
     private final ImageService imageService;
 
-    private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
+    private static final Logger logger = LoggerFactory.getLogger(AdsController.class);
 
     public AdsController(AdsService adsService, CommentService commentService, ImageService imageService) {
         this.adsService = adsService;
