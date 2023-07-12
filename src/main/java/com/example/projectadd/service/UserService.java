@@ -10,7 +10,7 @@ import java.io.IOException;
 
 
 public interface UserService {
-    void createUser(User user);
+    boolean createUser(User user);
 
     boolean setPassword(NewPasswordDTO newPasswordDto, String userName);
 

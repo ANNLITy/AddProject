@@ -3,7 +3,7 @@ package com.example.projectadd.impl;
 import com.example.projectadd.DTO.NewPasswordDTO;
 import com.example.projectadd.DTO.UserDTO;
 import com.example.projectadd.exception.UserNotFoundException;
-import com.example.projectadd.mapper.UserMapper;
+import com.example.projectadd.repository.mapper.UserMapper;
 import com.example.projectadd.model.User;
 import com.example.projectadd.repository.UserRepository;
 import com.example.projectadd.service.UserService;
@@ -32,11 +32,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void createUser(User user) {
+    public boolean createUser(User user) {
         if (userRepository.findByEmail(user.getEmail()) != null) {
             throw new RuntimeException("user already exist");
         }
         userRepository.save(user);
+        return true;
     }
     @Override
     public boolean setPassword(NewPasswordDTO newPasswordDto, String userName) {
