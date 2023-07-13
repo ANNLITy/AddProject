@@ -5,7 +5,7 @@ import com.example.projectadd.DTO.CreateAdsDTO;
 import com.example.projectadd.DTO.FullAdsDTO;
 import com.example.projectadd.DTO.ResponseWrapperAds;
 import com.example.projectadd.exception.AdNotFoundException;
-import com.example.projectadd.mapper.AdsMapper;
+import com.example.projectadd.repository.mapper.AdsMapper;
 import com.example.projectadd.model.Ads;
 import com.example.projectadd.repository.AdsRepository;
 import com.example.projectadd.service.AdsService;

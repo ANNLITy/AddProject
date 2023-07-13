@@ -1,4 +1,4 @@
-package com.example.projectadd.mapper;
+package com.example.projectadd.repository.mapper;
 
 import com.example.projectadd.DTO.AdsDTO;
 import com.example.projectadd.DTO.CreateAdsDTO;

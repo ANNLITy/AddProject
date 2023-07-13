@@ -5,7 +5,7 @@ import com.example.projectadd.DTO.CreateCommentDTO;
 import com.example.projectadd.DTO.ResponseWrapperCommentDTO;
 import com.example.projectadd.admin.AdminUtils;
 import com.example.projectadd.exception.CommentNotFoundException;
-import com.example.projectadd.mapper.CommentMapper;
+import com.example.projectadd.repository.mapper.CommentMapper;
 import com.example.projectadd.model.Ads;
 import com.example.projectadd.model.Comment;
 import com.example.projectadd.model.User;
