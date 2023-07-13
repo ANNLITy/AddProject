@@ -6,6 +6,7 @@ import com.example.projectadd.repository.mapper.UserMapper;
 import com.example.projectadd.service.AuthService;
 import com.example.projectadd.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,19 +16,18 @@ import org.springframework.transaction.annotation.Transactional;
 public class AuthServiceImpl implements AuthService {
     private final UserService userService;
     private final UserMapper userMapper;
+    private final PasswordEncoder encoder;
 
-    public AuthServiceImpl(UserService userService, UserMapper userMapper) {
+    public AuthServiceImpl(UserService userService, UserMapper userMapper, PasswordEncoder encoder) {
         this.userService = userService;
         this.userMapper = userMapper;
+        this.encoder = encoder;
     }
 
     @Override
     public boolean login(String userName, String password) {
         User user = userService.getUser(userName);
-        if (user.getPassword().equals(password)) {
-            return true;
-        }
-        return false;
+        return encoder.matches(password, user.getPassword());
     }
 
     @Override

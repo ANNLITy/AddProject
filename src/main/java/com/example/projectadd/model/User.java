@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 
 import javax.persistence.*;
-import java.time.Instant;
 import java.util.Collection;
 import java.util.List;
 
@@ -36,6 +35,15 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Ads> ads;
+
+    public User() {
+    }
+
+    public User(String email, String password, Role role) {
+        this.email=email;
+        this.password=password;
+        this.role=role;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -10,6 +10,8 @@ import java.io.IOException;
 
 
 public interface UserService {
+    UserDTO getAuthenticatedUser();
+
     boolean createUser(User user);
 
     boolean setPassword(NewPasswordDTO newPasswordDto, String userName);

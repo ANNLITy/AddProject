@@ -9,6 +9,7 @@ import com.example.projectadd.repository.UserRepository;
 import com.example.projectadd.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,10 +33,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserDTO getAuthenticatedUser() {
+        User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userMapper.toDto(userRepository.findByEmail(principal.getUsername()));
+    }
+
+    @Override
     public boolean createUser(User user) {
         if (userRepository.findByEmail(user.getEmail()) != null) {
             throw new RuntimeException("user already exist");
         }
+        user.setPassword(encoder.encode(user.getPassword()));
         userRepository.save(user);
         return true;
     }

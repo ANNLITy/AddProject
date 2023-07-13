@@ -2,6 +2,7 @@ package com.example.projectadd.controller;
 
 import com.example.projectadd.DTO.NewPasswordDTO;
 import com.example.projectadd.DTO.UserDTO;
+import com.example.projectadd.model.User;
 import com.example.projectadd.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
@@ -27,7 +28,7 @@ public class UserController {
     }
 
     @PostMapping("/set_password")
-    @Operation(summary ="Установка  пароля" )
+    @Operation(summary ="Обновление  пароля" )
     public ResponseEntity<UserDTO> setPassword(@RequestBody NewPasswordDTO newPassword,  Authentication authentication) {
         if (userService.setPassword(newPassword, authentication.getName())) {
             return ResponseEntity.ok().build();
@@ -35,6 +36,12 @@ public class UserController {
         else {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
+    }
+
+    @GetMapping("/me")
+    @Operation(summary = "Получить информацию об авторизованном пользователе")
+    public ResponseEntity<UserDTO> getUser() {
+        return ResponseEntity.ok(userService.getAuthenticatedUser());
     }
 
 
