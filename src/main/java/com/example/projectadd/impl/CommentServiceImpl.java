@@ -42,6 +42,10 @@ public class CommentServiceImpl implements CommentService {
         this.adminUtils = adminUtils;
     }
 
+    /**
+     * Метод получения списка комментариев к объявлению
+     */
+
     @Override
     public ResponseWrapperCommentDTO getComments(Integer id) {
         List<CommentDTO> comments = commentRepository.getCommentsByAds_Id(id).stream()
@@ -49,6 +53,10 @@ public class CommentServiceImpl implements CommentService {
                 .toList();
         return new ResponseWrapperCommentDTO(comments.size(), comments);
     }
+
+    /**
+     * Метод добавления комментария к объявлению
+     */
 
     @Override
     public CommentDTO addComment(Integer id, CreateCommentDTO createCommentDTO, Authentication authentication) {
@@ -65,6 +73,10 @@ public class CommentServiceImpl implements CommentService {
 
         return commentMapper.toCommentDto(comment);
     }
+
+    /**
+     * Метод изменения комментария к объявлению
+     */
 
     @Override
     public CommentDTO updateComment(Integer adId, Integer commentId, CommentDTO commentDTO, Authentication authentication) {
@@ -86,6 +98,9 @@ public class CommentServiceImpl implements CommentService {
         return commentMapper.toCommentDto(comment);
     }
 
+    /**
+     * Метод удаления комментария к объявлению
+     */
 
     @Override
     public boolean deleteComment(Integer adId, Integer commentId, Authentication authentication) {

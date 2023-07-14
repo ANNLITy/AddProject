@@ -43,10 +43,18 @@ public class AdsServiceImpl implements AdsService {
         this.userService = userService;
     }
 
+    /**
+     * Метод сохранения объявления в репозитории
+     */
+
     @Override
     public void save(Ads ads) {
         repository.save(ads);
     }
+
+    /**
+     * Метод обновления информации в объявлении
+     */
 
     @Override
     public AdsDTO update(int id, CreateAdsDTO createAds, Authentication authentication) {
@@ -60,6 +68,10 @@ public class AdsServiceImpl implements AdsService {
         }
         throw new NoAccessException("No access to ad");
     }
+
+    /**
+     * Метод обновления изображения в объявлении
+     */
 
     @Override
     public AdsDTO updateImage(int id, MultipartFile file, Authentication authentication) {
@@ -75,6 +87,10 @@ public class AdsServiceImpl implements AdsService {
         throw new NoAccessException("No access to ad");
     }
 
+    /**
+     * Метод удаления объявления
+     */
+
     @Override
     public boolean deleteById(int id, Authentication authentication) {
         if (adAccessCheck(id, authentication)) {
@@ -85,10 +101,18 @@ public class AdsServiceImpl implements AdsService {
         return false;
     }
 
+    /**
+     * Метод поиска объявления по id
+     */
+
     @Override
     public Ads getById(int id) {
         return repository.findById(id).orElseThrow(AdNotFoundException::new);
     }
+
+    /**
+     * Метод создания объявления
+     */
 
     @Override
     public AdsDTO addAd(CreateAdsDTO createAds, MultipartFile file, Authentication authentication) {
@@ -103,6 +127,10 @@ public class AdsServiceImpl implements AdsService {
         return adsMapper.toAdsDto(ads);
     }
 
+    /**
+     * Метод получения списка всех объявлений
+     */
+
     @Override
     public ResponseWrapperAds<AdsDTO> getAllAds() {
         ResponseWrapperAds<AdsDTO> response = new ResponseWrapperAds<>();
@@ -111,6 +139,10 @@ public class AdsServiceImpl implements AdsService {
         response.setResults(list);
         return response;
     }
+
+    /**
+     * Метод получения списка всех объявлений пользователя
+     */
 
     @Override
     public ResponseWrapperAds<AdsDTO> getAllUserAds(String userName) {
@@ -121,10 +153,19 @@ public class AdsServiceImpl implements AdsService {
         return response;
     }
 
+    /**
+     * Метод получения информации по объявлению по id
+     */
+
     @Override
     public FullAdsDTO getAdInfo(int id) {
         return adsMapper.toFullAdsDto(repository.findById(id).orElseThrow(AdNotFoundException::new));
     }
+
+    /**
+     * Метод проверки полномочий пользователя (USER/ADMIN)
+     */
+
 
     private boolean adAccessCheck(int id, Authentication authentication) {
         User user = userService.getUser(authentication.getName());

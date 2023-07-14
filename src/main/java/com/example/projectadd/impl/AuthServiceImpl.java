@@ -31,6 +31,9 @@ public class AuthServiceImpl implements AuthService {
         this.userMapper = userMapper;
         this.encoder = encoder;
     }
+    /**
+     * Метод доступа в аккаунт пользователя
+     */
 
     @Override
     public boolean login(String userName, String password) {
@@ -49,6 +52,10 @@ public class AuthServiceImpl implements AuthService {
             throw new BadCredentialsException("Bad credentials!");
         }
     }
+
+    /**
+     * Метод регистрации в аккаунте пользователя
+     */
 
     @Override
     public boolean register(RegisterReqDTO registerReqDTO) {

@@ -1,6 +1,8 @@
 package com.example.projectadd.DTO;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Data
 public class AdsDTO {
@@ -9,6 +11,7 @@ public class AdsDTO {
     private int pk;
     private int price;
     private String title;
+
 
     public int getAuthor() {
         return author;
@@ -49,6 +52,7 @@ public class AdsDTO {
     public void setTitle(String title) {
         this.title = title;
     }
+
 
 }
 

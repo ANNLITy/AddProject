@@ -34,11 +34,19 @@ public class UserServiceImpl implements UserService {
         this.encoder = encoder;
     }
 
+    /**
+     * Метод получения информации об авторизованном пользователе
+     */
+
     @Override
     public UserDTO getAuthenticatedUser() {
         User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return userMapper.toDto(userRepository.findByEmail(principal.getUsername()));
     }
+
+    /**
+     * Метод создания аккаунта пользователя
+     */
 
     @Override
     public boolean createUser(User user) {
@@ -49,6 +57,10 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
         return true;
     }
+
+    /**
+     * Метод создания и сохранения пароля пользователя
+     */
     @Override
     public boolean setPassword(NewPasswordDTO newPasswordDto, String userName) {
         User user = checkUserByUsername(userName);
@@ -61,22 +73,35 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
+    /**
+     * Метод поиска пользователя по id
+     */
+
     @Override
     public User getUserById(int id) {
         return userRepository.findById(id).orElseThrow();
     }
 
+    /**
+     * Метод поиска пользователя по User Name
+     */
     @Override
     public User getUser(String userName) {
         return userRepository.findByEmail(userName);
     }
 
+    /**
+     * Метод поиска пользователя по логину
+     */
     @Override
     public UserDTO getUser(Authentication authentication) {
         User user = getUser(authentication.getName());
         return userMapper.toDto(user);
     }
 
+    /**
+     * Метод обновления информации о пользователе
+     */
     @Override
     public UserDTO updateUser(UserDTO userDto, String userName) {
         User user = checkUserByUsername(userName);
@@ -87,6 +112,9 @@ public class UserServiceImpl implements UserService {
         return userMapper.toDto(user);
     }
 
+    /**
+     * Метод поиска пользователя по User Name
+     */
     @Override
     public User checkUserByUsername(String username) {
         User user = userRepository.findByEmail(username);
@@ -95,6 +123,10 @@ public class UserServiceImpl implements UserService {
         }
         return user;
     }
+
+    /**
+     * Метод обновления изображения в аккаунте пользователя
+     */
 
     @Override
     public User updateUserImage(MultipartFile image, String username) throws IOException {
