@@ -7,18 +7,14 @@ import com.example.projectadd.model.Image;
 import com.example.projectadd.repository.mapper.UserMapper;
 import com.example.projectadd.model.User;
 import com.example.projectadd.repository.UserRepository;
+import com.example.projectadd.service.ImageService;
 import com.example.projectadd.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 
 @Slf4j
 @Service
@@ -27,21 +23,13 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder encoder;
+    private final ImageService imageService;
 
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, PasswordEncoder encoder) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, PasswordEncoder encoder, ImageService imageService) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.encoder = encoder;
-    }
-
-    /**
-     * Метод получения информации об авторизованном пользователе
-     */
-
-    @Override
-    public UserDTO getAuthenticatedUser() {
-        User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return userMapper.toDto(userRepository.findByEmail(principal.getUsername()));
+        this.imageService = imageService;
     }
 
     /**
@@ -49,13 +37,11 @@ public class UserServiceImpl implements UserService {
      */
 
     @Override
-    public boolean createUser(User user) {
+    public void createUser(User user) {
         if (userRepository.findByEmail(user.getEmail()) != null) {
-            throw new RuntimeException("user already exist");
+            throw new RuntimeException("User already exist");
         }
-        user.setPassword(encoder.encode(user.getPassword()));
         userRepository.save(user);
-        return true;
     }
 
     /**
@@ -64,7 +50,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean setPassword(NewPasswordDTO newPasswordDto, String userName) {
         User user = checkUserByUsername(userName);
-        if (user != null) {
+        if (user != null && encoder.matches(newPasswordDto.getCurrentPassword(), user.getPassword())) {
             String password = newPasswordDto.getNewPassword();
             user.setPassword(encoder.encode(password));
             userRepository.save(user);
@@ -79,11 +65,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserById(int id) {
-        return userRepository.findById(id).orElseThrow();
+        return userRepository.findById(id).orElseThrow(UserNotFoundException::new);
     }
 
     /**
-     * Метод поиска пользователя по User Name
+     * Метод поиска пользователя по UserName
      */
     @Override
     public User getUser(String userName) {
@@ -117,7 +103,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public User checkUserByUsername(String username) {
-        User user = userRepository.findByEmail(username);
+        User user = getUser(username);
         if (user == null) {
             throw new UserNotFoundException(toString());
         }
@@ -129,26 +115,14 @@ public class UserServiceImpl implements UserService {
      */
 
     @Override
-    public User updateUserImage(MultipartFile image, String username) throws IOException {
-        User user = userRepository.findByEmail(username);
-        // Save the image to the server
-        String fileName = image.getOriginalFilename();
-        String fileExtension = fileName.substring(fileName.lastIndexOf("."));
-        String filePath = "path/to/image/directory/" + user.getId() + fileExtension;
-        File file = new File(filePath);
-        image.transferTo(file);
-
-        // Update the user's image URL
-        Image newImage = new Image();
-        newImage.setPath(filePath);
-        newImage.setMediaType(fileExtension);
-        newImage.setBytes(Files.readAllBytes(file.toPath()));
-        newImage.setSize(file.length());
-        user.setImage(newImage);
-
-        userRepository.save(user);
-
-        return user;
+    public UserDTO updateUserImage(MultipartFile image, Authentication authentication) {
+        User user = checkUserByUsername(authentication.getName());
+        Image userImage = user.getImage();
+        if (userImage != null) {
+            imageService.remove(userImage);
+        }
+        user.setImage(imageService.uploadImage(image));
+        return userMapper.toDto(userRepository.save(user));
     }
 }
 

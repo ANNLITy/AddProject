@@ -4,7 +4,6 @@ package com.example.projectadd.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -12,7 +11,6 @@ import javax.persistence.*;
 @Entity
 @EqualsAndHashCode
 @AllArgsConstructor
-@NoArgsConstructor
 @Table(name = "comments")
 public class Comment {
     @Id
@@ -24,6 +22,9 @@ public class Comment {
     private Ads ads;
     private Long createdAt;
     private String text;
+
+    public Comment() {
+    }
 
     public int getId() {
         return id;

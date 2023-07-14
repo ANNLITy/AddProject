@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @CrossOrigin(value = "http://localhost:3000")
-@Tag(name = "Аутентификация")
+@Tag(name = "Аутентификация", description = "AuthController")
 public class AuthController {
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
@@ -29,7 +29,7 @@ public class AuthController {
     }
 
 
-    @Operation(summary = "Авторизация пользователя")
+    @Operation(summary = "Авторизация пользователя", description = "login", tags={ "Авторизация" })
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginReqDTO req) {
         printLogInfo("login", "post", "/login");
@@ -40,7 +40,7 @@ public class AuthController {
         }
     }
 
-    @Operation(summary = "Регистрация пользователя")
+    @Operation(summary = "Регистрация пользователя", description = "register", tags={ "Регистрация" })
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterReqDTO req) {
         printLogInfo("register", "post", "/register");

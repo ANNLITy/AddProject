@@ -28,14 +28,14 @@ public class ImageServiceImpl implements ImageService {
     public Image uploadImage(MultipartFile imageFile) {
         Image image = new Image();
         try {
-            String fileId = UUID.randomUUID().toString();
-            image.setId(Long.valueOf(fileId));
             image.setBytes(imageFile.getBytes());
-            imageRepository.save(image);
-            return image;
         } catch (IOException e) {
-            throw new RuntimeException("byte exception");
+            throw new RuntimeException("Byte exception");
         }
+        String fileId = UUID.randomUUID().toString();
+        image.setId(fileId);
+//        imageRepository.saveAndFlush(image);
+        return image;
     }
 
     /**
@@ -43,7 +43,7 @@ public class ImageServiceImpl implements ImageService {
      */
     @Override
     public byte[] loadImage(String filename) {
-        Image image = imageRepository.findById(Integer.valueOf(filename)).orElseThrow(ImageNotFoundException::new);
+        Image image = imageRepository.findById(filename).orElseThrow(ImageNotFoundException::new);
         return image.getBytes();
     }
 
@@ -53,7 +53,7 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public Image getImageById(String id) {
-        return imageRepository.findById(Integer.valueOf(id)).orElseThrow(
+        return imageRepository.findById(id).orElseThrow(
                 () -> new NotFoundException("Image with id " + id + " not found!"));
     }
 

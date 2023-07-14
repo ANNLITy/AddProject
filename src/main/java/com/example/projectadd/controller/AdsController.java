@@ -8,8 +8,10 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -19,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/ads")
 @CrossOrigin(value = "http://localhost:3000")
+@Tag(name = "Объявления", description = "AdsController")
 public class AdsController {
     private final AdsService adsService;
     private final CommentService commentService;
@@ -68,10 +71,11 @@ public class AdsController {
             }
     )
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public <CreateAds> ResponseEntity<AdsDTO> addAds(@RequestPart("image") MultipartFile image,
-                                                     @RequestPart("properties") CreateAds properties, Authentication authentication) {
+    public ResponseEntity<AdsDTO> addAds(@RequestPart("image") MultipartFile image,
+                                         @RequestPart("properties") CreateAdsDTO properties,
+                                         Authentication authentication) {
         printLogInfo("/ads/", "post", "/ads/");
-        AdsDTO adsDTO = adsService.addAd((CreateAdsDTO) properties, image, authentication);
+        AdsDTO adsDTO = adsService.addAd(properties, image, authentication);
         return ResponseEntity.ok(adsDTO);
     }
 
@@ -107,12 +111,14 @@ public class AdsController {
             }
     )
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> removeAd(@PathVariable int id) {
-        adsService.deleteById(id);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<?> removeAd(@PathVariable int id, Authentication authentication) {
+        if (adsService.deleteById(id, authentication)) {
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 
-    // Обновить информацию об объявлении
+
     @Operation(
             summary = "Обновить информацию об объявлении",
             responses = {
@@ -129,11 +135,12 @@ public class AdsController {
             }
     )
     @PatchMapping("/{id}")
-    public ResponseEntity<AdsDTO> updateAds(@PathVariable int id, @RequestBody CreateAdsDTO createAds) {
-        return ResponseEntity.ok(adsService.update(id, createAds));
+    public ResponseEntity<AdsDTO> updateAds(@PathVariable int id,
+                                            @RequestBody CreateAdsDTO createAds,
+                                            Authentication authentication) {
+        return ResponseEntity.ok(adsService.update(id, createAds, authentication));
     }
 
-    // Получить объявления авторизованного пользователя
     @Operation(
             summary = "Получить объявления авторизованного пользователя",
             responses = {
@@ -155,7 +162,6 @@ public class AdsController {
         return ResponseEntity.ok(response);
     }
 
-    // Обновить картинку объявления
     @Operation(
             summary = "Обновить картинку объявления",
             responses = {
@@ -171,11 +177,10 @@ public class AdsController {
             }
     )
     @PatchMapping("/{id}/image")
-    public ResponseEntity<AdsDTO> updateImage(@PathVariable int id, @RequestParam MultipartFile image) {
-        return ResponseEntity.ok(adsService.updateImage(id, image));
+    public ResponseEntity<AdsDTO> updateImage(@PathVariable int id, @RequestParam MultipartFile image, Authentication authentication) {
+        return ResponseEntity.ok(adsService.updateImage(id, image, authentication));
     }
 
-    // Получить комментарии объявления
     @Operation(
             summary = "Получить комментарии объявления",
             responses = {
@@ -198,7 +203,6 @@ public class AdsController {
         return ResponseEntity.ok(responseWrapperCommentDTO);
     }
 
-    // Добавить комментарий к объявлению
     @Operation(
             summary = "Добавить комментарий к объявлению",
             responses = {
@@ -218,7 +222,6 @@ public class AdsController {
         return ResponseEntity.ok(commentService.addComment(id, createComment, authentication));
     }
 
-    // Удалить комментарий
     @Operation(
             summary = "Удалить комментарий",
             responses = {
@@ -229,11 +232,12 @@ public class AdsController {
     )
     @DeleteMapping("{adId}/comments/{commentId}")
     public ResponseEntity<CommentDTO> deleteComment(@PathVariable int adId, @PathVariable int commentId, Authentication authentication) {
-        commentService.deleteComment(adId, commentId, authentication);
-        return ResponseEntity.ok().build();
+        if (commentService.deleteComment(adId, commentId, authentication)) {
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 
-    // Обновить комментарий
     @Operation(
             summary = "Обновить комментарий",
             responses = {
@@ -250,8 +254,10 @@ public class AdsController {
             }
     )
     @PatchMapping("{adId}/comments/{commentId}")
-    public ResponseEntity<CommentDTO> updateComment(@PathVariable("adId") int adId, @PathVariable("commentId") int commentId,
-                                                    @RequestBody CommentDTO comment, Authentication authentication) {
+    public ResponseEntity<CommentDTO> updateComment(@PathVariable("adId") int adId,
+                                                    @PathVariable("commentId") int commentId,
+                                                    @RequestBody CommentDTO comment,
+                                                    Authentication authentication) {
         return ResponseEntity.ok(commentService.updateComment(adId, commentId, comment, authentication));
     }
 

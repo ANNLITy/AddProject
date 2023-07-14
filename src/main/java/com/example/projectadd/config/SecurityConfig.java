@@ -25,6 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/users/image/*"
     };
 
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf()
@@ -37,7 +38,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .httpBasic(withDefaults());
     }
-
 
     @Bean
     public PasswordEncoder passwordEncoder() {

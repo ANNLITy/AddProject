@@ -2,13 +2,13 @@ package com.example.projectadd.model;
 
 
 import lombok.*;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Data
 @Entity
 @Table(name = "ads")
-@NoArgsConstructor
 @EqualsAndHashCode
 @AllArgsConstructor
 public class Ads {
@@ -23,6 +23,9 @@ public class Ads {
     private LocalDateTime dateTime;
     @ManyToOne
     private User user;
+
+    public Ads() {
+    }
 
     @PrePersist
     private void init() {
