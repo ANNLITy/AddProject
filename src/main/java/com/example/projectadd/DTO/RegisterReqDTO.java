@@ -5,7 +5,7 @@ import lombok.Data;
 
 
 @Data
-public class RegisterDTO {
+public class RegisterReqDTO {
     private String username;
     private String password;
     private String firstName;

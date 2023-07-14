@@ -4,7 +4,6 @@ import com.example.projectadd.DTO.*;
 import com.example.projectadd.service.AdsService;
 import com.example.projectadd.service.CommentService;
 import com.example.projectadd.service.ImageService;
-import com.example.projectadd.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -72,7 +71,7 @@ public class AdsController {
     public <CreateAds> ResponseEntity<AdsDTO> addAds(@RequestPart("image") MultipartFile image,
                                                      @RequestPart("properties") CreateAds properties, Authentication authentication) {
         printLogInfo("/ads/", "post", "/ads/");
-        AdsDTO adsDTO = adsService.adAd((CreateAdsDTO) properties, image, authentication);
+        AdsDTO adsDTO = adsService.addAd((CreateAdsDTO) properties, image, authentication);
         return ResponseEntity.ok(adsDTO);
     }
 

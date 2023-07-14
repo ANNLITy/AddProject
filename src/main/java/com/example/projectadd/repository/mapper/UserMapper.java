@@ -1,6 +1,6 @@
 package com.example.projectadd.repository.mapper;
 
-import com.example.projectadd.DTO.RegisterDTO;
+import com.example.projectadd.DTO.RegisterReqDTO;
 import com.example.projectadd.DTO.UserDTO;
 import com.example.projectadd.model.Image;
 import com.example.projectadd.model.User;
@@ -14,10 +14,9 @@ public interface UserMapper {
     @Mapping(source = "image", target = "image", qualifiedByName = "imageMapper")
     UserDTO toDto(User user);
 
-    //Маперы для регистрации
     @Mapping(target = "role", defaultValue = "USER")
-    @Mapping(source = "username", target = "email")
-    User toEntity(RegisterDTO dto);
+    @Mapping(target = "email", source = "username")
+    User toModel(RegisterReqDTO dto);
 
     @Named("imageMapper")
     default String imageMapper(Image image) {

@@ -1,6 +1,9 @@
 package com.example.projectadd.DTO;
 
-public class LoginDTO {
+import lombok.Data;
+
+@Data
+public class LoginReqDTO {
     private String username;
     private String password;
     public String getUsername() {

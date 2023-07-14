@@ -23,6 +23,6 @@ public interface UserService {
 
     UserDTO updateUser(UserDTO userDto, String userName);
     User checkUserByUsername(String username);
-    User updateUserImage(MultipartFile image, User currentUser) throws IOException;
+    User updateUserImage(MultipartFile image, String username) throws IOException;
 }
 

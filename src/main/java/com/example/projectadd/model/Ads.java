@@ -11,8 +11,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @EqualsAndHashCode
 @AllArgsConstructor
-@Getter
-@Setter
 public class Ads {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

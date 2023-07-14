@@ -27,6 +27,7 @@ public class ImageServiceImpl implements ImageService {
             String fileId = UUID.randomUUID().toString();
             image.setId(Long.valueOf(fileId));
             image.setBytes(imageFile.getBytes());
+            imageRepository.save(image);
             return image;
         } catch (IOException e) {
             throw new RuntimeException("byte exception");

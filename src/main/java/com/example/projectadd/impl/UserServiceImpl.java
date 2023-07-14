@@ -3,6 +3,7 @@ package com.example.projectadd.impl;
 import com.example.projectadd.DTO.NewPasswordDTO;
 import com.example.projectadd.DTO.UserDTO;
 import com.example.projectadd.exception.UserNotFoundException;
+import com.example.projectadd.model.Image;
 import com.example.projectadd.repository.mapper.UserMapper;
 import com.example.projectadd.model.User;
 import com.example.projectadd.repository.UserRepository;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 
 @Slf4j
 @Service
@@ -95,16 +97,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUserImage(MultipartFile image, User currentUser) throws IOException {
-        User user = userRepository.findByEmail(currentUser.getUsername());
+    public User updateUserImage(MultipartFile image, String username) throws IOException {
+        User user = userRepository.findByEmail(username);
         // Save the image to the server
         String fileName = image.getOriginalFilename();
         String fileExtension = fileName.substring(fileName.lastIndexOf("."));
-        String filePath = "path/to/image/directory/" + user.getId() + fileExtension; // Update the file path as per your server setup
+        String filePath = "path/to/image/directory/" + user.getId() + fileExtension;
         File file = new File(filePath);
         image.transferTo(file);
 
         // Update the user's image URL
+        Image newImage = new Image();
+        newImage.setPath(filePath);
+        newImage.setMediaType(fileExtension);
+        newImage.setBytes(Files.readAllBytes(file.toPath()));
+        newImage.setSize(file.length());
+        user.setImage(newImage);
 
         userRepository.save(user);
 

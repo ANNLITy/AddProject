@@ -1,7 +1,7 @@
 package com.example.projectadd.controller;
 
-import com.example.projectadd.DTO.LoginDTO;
-import com.example.projectadd.DTO.RegisterDTO;
+import com.example.projectadd.DTO.LoginReqDTO;
+import com.example.projectadd.DTO.RegisterReqDTO;
 import com.example.projectadd.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import static com.example.projectadd.config.Role.USER;
 
 @Slf4j
 @RestController
@@ -33,7 +31,7 @@ public class AuthController {
 
     @Operation(summary = "Авторизация пользователя")
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginDTO req) {
+    public ResponseEntity<?> login(@RequestBody LoginReqDTO req) {
         printLogInfo("login", "post", "/login");
         if (authService.login(req.getUsername(), req.getPassword())) {
             return ResponseEntity.ok().build();
@@ -44,7 +42,7 @@ public class AuthController {
 
     @Operation(summary = "Регистрация пользователя")
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody RegisterDTO req) {
+    public ResponseEntity<?> register(@RequestBody RegisterReqDTO req) {
         printLogInfo("register", "post", "/register");
         if (authService.register(req)) {
             return ResponseEntity.ok().build();

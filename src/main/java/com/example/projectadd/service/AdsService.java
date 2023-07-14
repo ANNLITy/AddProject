@@ -10,12 +10,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface AdsService {
     void save(Ads ads);
-    void deleteById(int id);
+    boolean deleteById(int id, Authentication authentication);
     Ads getById(int id);
-    AdsDTO adAd(CreateAdsDTO createAds, MultipartFile file, Authentication authentication);
+    AdsDTO addAd(CreateAdsDTO createAds, MultipartFile file, Authentication authentication);
     ResponseWrapperAds<AdsDTO> getAllAds();
     FullAdsDTO getAdInfo(int id);
-    AdsDTO update(int id, CreateAdsDTO createAds);
+    AdsDTO update(int id, CreateAdsDTO createAds, Authentication authentication);
     ResponseWrapperAds<AdsDTO> getAllUserAds(String userName);
-    AdsDTO updateImage(int id, MultipartFile file);
+    AdsDTO updateImage(int id, MultipartFile file, Authentication authentication);
 }

@@ -13,6 +13,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping("/users")
 @CrossOrigin(value = "http://localhost:3000")
@@ -44,7 +46,17 @@ public class UserController {
         return ResponseEntity.ok(userService.getAuthenticatedUser());
     }
 
-
+    @PostMapping("/me/image")
+    @Operation(summary ="Обновить аватар авторизованного пользователя" )
+    public ResponseEntity<Void> setPassword(@RequestBody MultipartFile image,  Authentication authentication) {
+        try {
+            userService.updateUserImage(image, authentication.getName());
+            return ResponseEntity.ok().build();
+        } catch (IOException e) {
+            logger.error(e.toString());
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 
 
 }

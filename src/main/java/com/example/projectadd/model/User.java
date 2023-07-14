@@ -1,7 +1,10 @@
 package com.example.projectadd.model;
 
 import com.example.projectadd.config.Role;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,6 +16,9 @@ import java.util.List;
 
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode
 @Table(name = "users")
 public class User implements UserDetails {
     @Id
@@ -35,9 +41,6 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Ads> ads;
-
-    public User() {
-    }
 
     public User(String email, String password, Role role) {
         this.email=email;

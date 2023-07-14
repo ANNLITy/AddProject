@@ -1,24 +1,21 @@
 package com.example.projectadd.DTO;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 @Data
 public class AdsDTO {
-    private int authorId;
+    private int author;
     private String image;
     private int pk;
     private int price;
     private String title;
-    private String description;
 
-    public int getAuthorId() {
-        return authorId;
+    public int getAuthor() {
+        return author;
     }
 
-    public void setAuthorId(int authorId) {
-        this.authorId = authorId;
+    public void setAuthor(int author) {
+        this.author = author;
     }
 
     public String getImage() {
@@ -53,12 +50,5 @@ public class AdsDTO {
         this.title = title;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 }
 

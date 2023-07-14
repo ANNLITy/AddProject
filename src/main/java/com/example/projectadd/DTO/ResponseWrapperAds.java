@@ -1,11 +1,15 @@
 package com.example.projectadd.DTO;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Collection;
 import java.util.List;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ResponseWrapperAds<T> {
     private int count;
     private Collection<T> results;

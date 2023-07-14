@@ -1,7 +1,6 @@
 package com.example.projectadd.repository.mapper;
 
 import com.example.projectadd.DTO.AdsDTO;
-import com.example.projectadd.DTO.CreateAdsDTO;
 import com.example.projectadd.DTO.FullAdsDTO;
 import com.example.projectadd.model.Ads;
 import com.example.projectadd.model.Image;
@@ -19,7 +18,7 @@ public interface AdsMapper {
     @Mapping(source = "id", target = "pk")
     FullAdsDTO toFullAdsDto(Ads ads);
 
-    @Mapping(source = "user.id", target = "authorId")
+    @Mapping(source = "user.id", target = "author")
     @Mapping(source = "image", target = "image", qualifiedByName = "imageMapper")
     @Mapping(source = "id", target = "pk")
     AdsDTO toAdsDto(Ads ads);

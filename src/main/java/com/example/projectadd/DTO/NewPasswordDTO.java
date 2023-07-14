@@ -1,11 +1,15 @@
 package com.example.projectadd.DTO;
 
+import lombok.Data;
+
+@Data
 public class NewPasswordDTO {
     private String currentPassword;
     private String newPassword;
-  public String getCurrentPassword() {
-    return currentPassword;
-}
+
+    public String getCurrentPassword() {
+        return currentPassword;
+    }
 
     public void setCurrentPassword(String currentPassword) {
         this.currentPassword = currentPassword;
